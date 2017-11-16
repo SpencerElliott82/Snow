@@ -20,7 +20,7 @@ var browserWidth;
 var browserHeight;
 
 // Specify the number of snowflakes you want visible
-var numberOfSnowflakes = 50;
+var numberOfSnowflakes = 60;
 
 // Flag to reset the position of the snowflakes
 var resetPosition = false;
@@ -97,6 +97,30 @@ function setTranslate3DTransform(element, xPosition, yPosition) {
 //
 // The function responsible for creating the snowflake
 //
+
+//Get width properly
+function getWidth() {
+  return Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.documentElement.clientWidth
+  );
+}
+
+//get height properly
+function getHeight() {
+  return Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+    document.documentElement.clientHeight
+  );
+}
+
+
 function generateSnowflakes() {
 	
 	// get our snowflake element from the DOM and store it
@@ -106,8 +130,8 @@ function generateSnowflakes() {
     var snowflakeContainer = originalSnowflake.parentNode;
     
     // get our browser's size
-	browserWidth = document.documentElement.clientWidth;
-    browserHeight = document.documentElement.clientHeight;
+	browserWidth = getWidth();
+    browserHeight = getHeight();
 	        
     // create each individual snowflake
     for (var i = 0; i < numberOfSnowflakes; i++) {
@@ -117,7 +141,7 @@ function generateSnowflakes() {
         snowflakeContainer.appendChild(snowflakeCopy);
 
 		// set our snowflake's initial position and related properties
-        var initialXPos = getPosition(50, browserWidth);
+        var initialXPos = getPosition(0, browserWidth);
         var initialYPos = getPosition(50, browserHeight);
         var speed = 5+Math.random()*40;
         var radius = 4+Math.random()*10;
@@ -131,7 +155,7 @@ function generateSnowflakes() {
         snowflakes.push(snowflakeObject);
     }
     
-    // remove the original snowflake because we no longer need it visible
+    // remove the original snowflake because it's not all "Hello World", sometimes it's "good bye cruel world"
 	snowflakeContainer.removeChild(originalSnowflake);
 	
 	// call the moveSnowflakes function every 30 milliseconds
@@ -155,7 +179,7 @@ function moveSnowflakes() {
 		for (var i = 0; i < snowflakes.length; i++) {
 	        var snowflake = snowflakes[i];
 	        
-	        snowflake.xPos = getPosition(50, browserWidth);
+	        snowflake.xPos = getPosition(0, browserWidth);
 	        snowflake.yPos = getPosition(50, browserHeight);
 	    }
 	    
